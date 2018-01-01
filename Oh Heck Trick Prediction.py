@@ -1,43 +1,70 @@
 
 
-import pdb
-
-#suits = {"C": 1, "D": 2, "H": 3, "S": 4}
-num_values = {"2": 2, "3": 3, "4": 4, "5": 5, "6": 6, "7": 7, "8": 8,
-              "9": 9, "10": 10, "J": 11, "Q": 12, "K": 13, "A": 14}
-
 class Suit:
-
     def __init__(self, letter, name, index):
-        self.letter = letter
+        self.letter = letter.upper()
         self.name = name
         self.index = index
 
-class Value:
 
+class Value:
     def __init__(self, string, name, val):
         self.string = string
         self.name = name
         self.val = val
 
 
-clubs = Suit("C", "Clubs", 0)
-diamonds = Suit("D", "Diamonds", 1)
-hearts = Suit("H", "Hearts", 2)
-spades = Suit("S", "Spades", 3)
-suits = {"C": clubs, "D": diamonds, "H": hearts, "S": spades}
-
-two = Value("2", "Two", 2)
-three = Value("3", "Three", 3)
-four = Value("4", "Four", 4)
-
-
 class Card:
-
     def __init__(self, suit, value):
 
         self.suit = suit
         self.value = value
+
+    def __repr__(self):
+        return self.value.name + " of " + self.suit.name
+
+    def __str__(self):
+        return self.value.name + " of " + self.suit.name
+
+
+def create_suits():
+
+    clubs = Suit("C", "Clubs", 0)
+    diamonds = Suit("D", "Diamonds", 1)
+    hearts = Suit("H", "Hearts", 2)
+    spades = Suit("S", "Spades", 3)
+    return {"C": clubs, "D": diamonds, "H": hearts, "S": spades}
+
+
+def create_values():
+    two = Value("2", "Two", 2)
+    three = Value("3", "Three", 3)
+    four = Value("4", "Four", 4)
+    five = Value("5", "Five", 5)
+    six = Value("6", "Six", 6)
+    seven = Value("7", "Seven", 7)
+    eight = Value("8", "Eight", 8)
+    nine = Value("9", "Nine", 9)
+    ten = Value("10", "Ten", 10)
+    jack = Value("J", "Jack", 11)
+    queen = Value("Q", "Queen", 12)
+    king = Value("K", "King", 13)
+    ace = Value("A", "Ace", 14)
+    return {"2": two, "3": three, "4": four, "5": five, "6": six,
+            "7": seven, "8": eight, "9": nine, "10": ten,
+            "J": jack, "Q": queen, "K": king, "A": ace}
+
+
+suits = create_suits()
+values = create_values()
+
+
+def create_deck():
+    deck = []
+    for suit in suits.values():
+        for value in values.values():
+            deck.append(Card(suit, value))
+    return deck
 
 
 def is_valid_card(card_str):
@@ -61,14 +88,15 @@ def is_valid_card(card_str):
     return True
 
 
-
-
 def vectorize_card(card):
 
-    suit_index =
+    card_vector = [0] * 5
+    card_vector[card.suit.index] = 1
+    card_vector[4] = card.value.val
+    return card_vector
 
-    return []
 
-
+deck = create_deck()
+vectors = [vectorize_card(card) for card in deck]
 
 
