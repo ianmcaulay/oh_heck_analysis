@@ -26,6 +26,42 @@ class Card:
     def __str__(self):
         return self.value.name + " of " + self.suit.name
 
+    def get_index(self):
+        """
+        Returns the index from 0 to 51, ordered by clubs, diamonds,
+        hearts, spades, and then by number, from 2 to ace. Therefore
+        two of clubs should have index 0 and ace of spades should
+        have index 51. 
+        """
+        # Subtract by 2 since 2 is the smallest card
+        return self.suit.index * 13 + self.value.val - 2
+
+
+    def vectorize(self):
+        vector = [0] * 5
+        vector[self.suit.index] = 1
+        vector[4] = self.value.val
+        return vector
+
+
+class Hand:
+    def __init__(self, cards):
+        self.cards = cards
+
+    def __repr__(self):
+        output = ""
+        for card in self.cards[:-1]:
+            output += str(card)
+            output += ", "
+        output += str(self.cards[-1])
+        return output
+
+    def vectorize(self):
+        vector = [0] * 52
+        for card in self.cards:
+            vector[card.get_index()] = 1
+        return vector
+
 
 def create_suits():
 
@@ -86,17 +122,5 @@ def is_valid_card(card_str):
     if len(card_str) == 3 and card_str[1:] != "10":
         return False
     return True
-
-
-def vectorize_card(card):
-
-    card_vector = [0] * 5
-    card_vector[card.suit.index] = 1
-    card_vector[4] = card.value.val
-    return card_vector
-
-
-deck = create_deck()
-vectors = [vectorize_card(card) for card in deck]
 
 
