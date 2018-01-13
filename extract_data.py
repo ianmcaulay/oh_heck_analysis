@@ -1,5 +1,6 @@
 import pandas as pd
 import openpyxl
+from os import listdir
 
 def get_row_vals(excel_filename):
     wb = openpyxl.load_workbook(excel_filename, data_only = True)
@@ -56,17 +57,17 @@ def add_row_data_to_df(rows, df, game_id):
 
 
 def make_game_id_from_filename(filename):
-	# Remove the last slash and everything before it
-	filename = filename[filename.rfind("/")+1:]
-	# Remove the last dot and everything after it
-	filename = filename[:filename.rfind(".")]
-	filename = filename.lower()
-	filename = filename.replace("oh", "")
-	filename = filename.replace("heck", "")
-	filename = filename.replace("score", "")
-	filename = filename.replace("sheet", "")
-	filename.replace("  ", " ")
-	return filename
+    # Remove the last slash and everything before it
+    filename = filename[filename.rfind("/")+1:]
+    # Remove the last dot and everything after it
+    filename = filename[:filename.rfind(".")]
+    filename = filename.lower()
+    filename = filename.replace("oh", "")
+    filename = filename.replace("heck", "")
+    filename = filename.replace("score", "")
+    filename = filename.replace("sheet", "")
+    filename.replace("  ", " ")
+    return filename
 
 
 def verify_data(rounds, names, bids, makes, scores):
@@ -80,20 +81,23 @@ def verify_data(rounds, names, bids, makes, scores):
 
 
 def get_df_from_excel(excel_filename):
-	df = create_df()
-	rows = get_row_vals(excel_filename)
-	game_id = make_game_id_from_filename(excel_filename)
-	df = add_row_data_to_df(rows, df, game_id)
-	return df
+    df = create_df()
+    rows = get_row_vals(excel_filename)
+    game_id = make_game_id_from_filename(excel_filename)
+    df = add_row_data_to_df(rows, df, game_id)
+    return df
 
 
 def extract_all_data(data_folder):
-	
-	df = create_df()
-	#for filename in data_folder:
-		# append get_df_from_excel(filename)
+    
+    df = create_df()
+    for filename in listdir(data_folder):
+        filename = data_folder + "/" + filename
+        # TODO: there's probably a better way to handle this
+        if filename[-5:] == ".xlsx":
+            df = df.append(get_df_from_excel(filename))
 
-	return df
+    return df
 
 
 

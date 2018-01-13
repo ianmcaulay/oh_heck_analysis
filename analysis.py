@@ -1,6 +1,7 @@
 import csv
 import pandas as pd
-from extract_data import get_df_from_excel 
+from extract_data import get_df_from_excel, extract_all_data
+
 
 import pdb
 debug = True
@@ -41,6 +42,8 @@ def get_overbid_percentage(df, player):
 
 
 filename = "Example Spreadsheets/2017.11.21 1 Oh Heck Score Sheet.xlsx"
+folderpath = "Example Spreadsheets"
 df = get_df_from_excel(filename)
+df = extract_all_data(folderpath)
 set_trace()
 
