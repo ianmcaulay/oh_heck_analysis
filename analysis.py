@@ -37,8 +37,11 @@ def get_overbid_percentage(df, player):
     made_df = df[df['Bid'] > df['Made']]
     return len(made_df) / len(df)
 
-def get_final_score_rows(df):
-    return df[df['Round'] == 1]
+def get_num_rounds_in_game(df, game_id):
+    return max(df['Round'][df['GameID'] == game_id])
+
+def get_num_players_in_game(df, game_id):
+    return len(set(df['Player'][df['GameID'] == game_id]))
 
 def repeat_for_all_players(df, fn):
     players = set(df['Player'])
@@ -57,5 +60,7 @@ rep = repeat_for_all_players
 folderpath = "Example Spreadsheets"
 #df = get_df_from_excel(filename)
 df = extract_all_data(folderpath)
+players = list(set(df['Player']))
+games = list(set(df['GameID']))
 set_trace()
 

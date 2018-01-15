@@ -66,7 +66,11 @@ def make_game_id_from_filename(filename):
     filename = filename.replace("heck", "")
     filename = filename.replace("score", "")
     filename = filename.replace("sheet", "")
-    filename.replace("  ", " ")
+    # TODO: go back to using built in method once I can look it up
+    #filename.replace("  ", " ")
+    filename = repeat_replace(filename, "  ", " ")
+    if filename[0] == " ": filename = filename[1:]
+    if filename[-1] == " ": filename = filename[:-1]
     return filename
 
 
@@ -100,5 +104,14 @@ def extract_all_data(data_folder):
     return df
 
 
+def repeat_replace(string, arg1, arg2):
+	# TODO: temporarily using this to repeatedly apply the replace
+	# method to a string because I don't have Internet to look
+	# up the funciton/arguments to do that
+	new_string = string.replace(arg1, arg2)
+	while string != new_string:
+		string = new_string
+		new_string = string.replace(arg1, arg2)
+	return string
 
 
