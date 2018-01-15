@@ -64,8 +64,6 @@ class Hand:
             vector[card.get_index()] = 1
         return vector
 
-    
-
 
 def create_suits():
     clubs = Suit("C", "Clubs", 0)

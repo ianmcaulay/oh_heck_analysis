@@ -4,17 +4,15 @@ import deck
 #from os import listdir
 
 import pdb
-st = pdb.set_trace
 
 
-def get_player_hands(excel_filename, player_name):
+def get_player_hands_data(excel_filename, player_name):
     wb = openpyxl.load_workbook(excel_filename, data_only = True)
     sh = wb.get_sheet_by_name(player_name)
     # This is hard coded to the specific spreadsheet format I made
     rows = [[cell.value for cell in row if cell.value] for row in sh.rows]
     # Remove top two rows without data
     rows = rows[2:]
-    ##rows = [val for val ]
     # Extract and remove the number of cards and trump cards
     num_cards = [row[0] for row in rows]
     trumps = [row[1] for row in rows]
@@ -23,7 +21,7 @@ def get_player_hands(excel_filename, player_name):
     for row in rows:
         hands.append(convert_row_to_hand(row))
 
-    return hands
+    return num_cards, trumps, hands
 
 
 def convert_row_to_hand(row):
@@ -33,9 +31,5 @@ def convert_row_to_hand(row):
     return deck.Hand(cards)
 
 
-filename = "Example Spreadsheets/2017.12.22 1 Oh Heck Score Sheet.xlsx"
-hands = get_player_hands(filename, "Ian")
-
-
-
-pdb.set_trace()
+#filename = "Example Spreadsheets/2017.12.22 1 Oh Heck Score Sheet.xlsx"
+#num_cards, trumps, hands = get_player_hands_data(filename, "Ian")
