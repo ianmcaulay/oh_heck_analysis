@@ -16,7 +16,6 @@ class Value:
 
 class Card:
     def __init__(self, suit, value):
-
         self.suit = suit
         self.value = value
 
@@ -49,12 +48,15 @@ class Hand:
         self.cards = cards
 
     def __repr__(self):
-        output = ""
-        for card in self.cards[:-1]:
-            output += str(card)
-            output += ", "
-        output += str(self.cards[-1])
-        return output
+        return str(self.cards)
+
+    # def __repr__(self):
+    #     output = ""
+    #     for card in self.cards[:-1]:
+    #         output += str(card)
+    #         output += ", "
+    #     output += str(self.cards[-1])
+    #     return output
 
     def vectorize(self):
         vector = [0] * 52
@@ -62,9 +64,10 @@ class Hand:
             vector[card.get_index()] = 1
         return vector
 
+    
+
 
 def create_suits():
-
     clubs = Suit("C", "Clubs", 0)
     diamonds = Suit("D", "Diamonds", 1)
     hearts = Suit("H", "Hearts", 2)
@@ -103,6 +106,18 @@ def create_deck():
     return deck
 
 
+def to_card(card_str):
+    card_str = card_str.upper()
+    if is_valid_card(card_str):
+        suit = suits[card_str[0]]
+        value = values[card_str[1:]]
+        return Card(suit, value)
+
+    else:
+        # TODO: throw exception or something here
+        print("Unable to parse " + card_str)
+
+
 def is_valid_card(card_str):
     """ 
     Check whether the given string is in a valid
@@ -117,7 +132,7 @@ def is_valid_card(card_str):
         return False
     if card_str[0] not in suits:
         return False
-    if len(card_str) == 2 and card_str[1] not in num_values:
+    if len(card_str) == 2 and card_str[1] not in values:
         return False
     if len(card_str) == 3 and card_str[1:] != "10":
         return False

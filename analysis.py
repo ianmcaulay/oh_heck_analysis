@@ -41,9 +41,9 @@ def get_overbid_percentage(df, player):
 
 
 
-filename = "Example Spreadsheets/2017.11.21 1 Oh Heck Score Sheet.xlsx"
+#filename = "Example Spreadsheets/2017.11.21 1 Oh Heck Score Sheet.xlsx"
 folderpath = "Example Spreadsheets"
-df = get_df_from_excel(filename)
+#df = get_df_from_excel(filename)
 df = extract_all_data(folderpath)
 set_trace()
 
