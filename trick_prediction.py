@@ -10,7 +10,6 @@ def vectorize_hands_data(num_cards, trumps, hands):
 
     vectors = []
     for i in range(len(num_cards)):
-        #vector = [0] * vector_len
         vector = []
         vector += [num_cards[i]]
         vector += deck.to_card(trumps[i]).vectorize()
